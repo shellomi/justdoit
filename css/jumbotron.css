@@ -3,6 +3,11 @@ body {
   padding-top: 50px;
   padding-bottom: 20px;
 }
+
+.navbar-brand {
+    float: left;
+    clear: none;
+}
 .navbar-header .navbar-brand img {
 	width: 35px;
 	height: 35px;
