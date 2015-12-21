@@ -1,0 +1,10 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+.navbar-header .navbar-brand img {
+	width: 35px;
+	height: 35px;
+	margin-top: -8px;
+}
