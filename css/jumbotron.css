@@ -4,6 +4,24 @@ body {
   padding-bottom: 20px;
 }
 
+@media screen and (min-width: 480px) and (orientation: landscape) {
+    .my-jumbotron{
+        background-image: url(/img/bgimage.svg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
+@media screen and (min-width: 480px) and (orientation: landscape) {
+    .jumbotron-height{
+        min-height: 590px;
+    }
+}
+
+.jumbotron-video{
+    background-color: #272424;
+}
+
 .navbar-brand {
     float: left;
     clear: none;
@@ -12,4 +30,30 @@ body {
 	width: 35px;
 	height: 35px;
 	margin-top: -8px;
+}
+
+/*.mainsection{
+    height: 590px;
+}*/
+
+.video{
+    width: 300px;
+    height: 300px;
+}
+
+.video-button{
+    margin: 50px 50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background-image: url(/img/video-play-icon.svg), url(/img/video-background.jpg);
+    background-size: auto auto, 200px 200px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.video-modal{
+    background-color: #272424;
+    display: none;
 }
