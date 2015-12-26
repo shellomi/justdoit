@@ -50,10 +50,21 @@ body {
     background-size: auto auto, 200px 200px;
     background-repeat: no-repeat;
     background-position: center;
+    outline: none;
     cursor: pointer;
 }
 
 .video-modal{
     background-color: #272424;
     display: none;
+}
+
+.video-close-button {
+    float: right;
+    font-size: 36px;
+    color: #EFEAE1;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
 }
