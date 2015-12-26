@@ -4,7 +4,7 @@ body {
   padding-bottom: 20px;
 }
 
-@media screen and (min-width: 480px) and (orientation: landscape) {
+@media screen and (min-width: 768px) {
     .my-jumbotron{
         background-image: url(/img/bgimage.svg);
         background-repeat: no-repeat;
@@ -12,7 +12,7 @@ body {
     }
 }
 
-@media screen and (min-width: 480px) and (orientation: landscape) {
+@media screen and (min-width: 768px) {
     .jumbotron-height{
         min-height: 590px;
     }
