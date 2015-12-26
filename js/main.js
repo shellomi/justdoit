@@ -10,8 +10,8 @@ function main() {
   $(".video-close-button").click(function(){
     $(".jumbotron").removeClass("jumbotron-video").addClass("my-jumbotron");
     $(".video-player").remove();
-    $("video-modal").hide();
-    $("main-container").show();
+    $(".video-modal").hide();
+    $(".main-container").show();
   });
 }
 
