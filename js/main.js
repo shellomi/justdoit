@@ -5,6 +5,7 @@ function main() {
     $(".video-modal").show();
     var e = '<iframe class="video-player" src="https://www.youtube.com/embed/Y7aEiVwBAdk?autoplay=1&rel=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     $(".video-row").append(e);
+    //$("#videoModal").modal('show');
   });
 
   $(".video-close-button").click(function(){
@@ -13,6 +14,14 @@ function main() {
     $(".video-modal").hide();
     $(".main-container").show();
   });
+
+  // $("#videoModal").on('show.bs.modal', function(){
+  //   var e = '<iframe class="video-player" src="https://www.youtube.com/embed/Y7aEiVwBAdk?autoplay=1&rel=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+  //   $("#videoDiv").append(e);
+  // });
+  // $("#videoModal").on('hide.bs.modal', function(){
+  //   $(".video-player").remove();
+  // })
 }
 
 // function autoPlayYouTubeModal() {
