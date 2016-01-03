@@ -1,0 +1,102 @@
+{% extends 'ecommerce/base.html' %}
+{% load staticfiles %}
+{% block content %}
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="mainsection">
+    <div class="jumbotron my-jumbotron jumbotron-height">
+      <div class="container main-container">
+        <div class="row">
+          <div class="col-md-6">
+            <h1>Shellomi</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, earum, veritatis quisquam sapiente sed quo expedita delectus illo quia ex rem ipsam hic quasi id quidem maiores sint modi molestias repellat sequi eum rerum sit asperiores accusantium neque ea deleniti?</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+          </div>
+          <div class="col-md-6">
+            <div class="video">
+              <button class="video-button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container video-modal">
+        <div class="row">
+          <button class="video-close-button">x</button>
+        </div>
+        <div class="row video-row embed-responsive embed-responsive-16by9">
+        </div>
+      </div>
+      <!-- <div class="modal fade" id="videoModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+                <div class="modal-body">
+                    <div id="videoDiv" class="embed-responsive embed-responsive-16by9">
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+  <div class="container">
+    <!-- Example row of columns -->
+    <!--
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Heading</h2>
+        <p>lorem10</p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <h2>Heading</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <h2>Heading</h2>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+    </div>
+  -->
+    <div class="row">
+    <div class="col-md-4">
+      <div class="thumbnail"><img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="Thumbnail Image 1" class="image-fill">
+      </div>
+    </div>
+    <div class="col-md-8">
+    	<div class="caption">
+      	<h3>Premium package</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, id, qui, unde, tenetur dignissimos porro architecto asperiores rem necessitatibus provident magni perspiciatis corrupti doloribus eius vero accusamus ea minima neque enim eos nisi velit nobis a repudiandae officia beatae dolores vitae! Quidem, corporis, architecto placeat fugiat repellat tempore dolore explicabo aperiam provident debitis nisi hic culpa non maxime et laboriosam alias velit iste deleniti sequi. Reiciendis, ex voluptatum laborum beatae!</p>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-md-4">
+      <div class="thumbnail"><img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="Thumbnail Image 1" class="image-fill">
+      </div>
+    </div>
+    <div class="col-md-8">
+    	<div class="caption">
+      	<h3>Medium package</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit, voluptas, voluptatem quibusdam magni excepturi id tenetur quae modi ipsam veniam quos maxime autem magnam placeat repellendus voluptate molestias accusamus adipisci fuga hic eos rem aperiam iure. Hic, odio, facilis, nam quibusdam magni libero molestias laudantium reiciendis eum corporis eveniet unde rerum sit nesciunt quae illum ut voluptatem voluptatum cupiditate obcaecati fugit id facere illo harum asperiores quos excepturi voluptatibus adipisci.</p>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-md-4">
+      <div class="thumbnail"><img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="Thumbnail Image 1" class="image-fill">
+      </div>
+    </div>
+    <div class="col-md-8">
+    	<div class="caption">
+      	<h3>Small package</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, blanditiis, quasi beatae neque porro eius numquam vitae vero vel fugit consequuntur officiis iure voluptate ab quam tenetur facere temporibus voluptatibus tempore impedit earum odit nam modi esse error aspernatur doloremque fugiat quo recusandae voluptatum id commodi ea similique sapiente eos saepe cum consequatur architecto necessitatibus deserunt sit sequi totam tempora quisquam deleniti explicabo culpa veritatis corporis exercitationem quos. Vero, mollitia.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+{% endblock %}

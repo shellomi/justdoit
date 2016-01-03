@@ -1,3 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def home(request):
+    return render(request, 'ecommerce/index.html')
+
+
+def stationery(request):
+    return render(request, 'ecommerce/stationery.html')
