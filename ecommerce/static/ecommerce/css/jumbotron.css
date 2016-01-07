@@ -68,3 +68,8 @@ body {
     outline: none;
     cursor: pointer;
 }
+
+.breadcrumb {
+    background-color: #FFFFFF;
+    border-radius: 0;
+}
