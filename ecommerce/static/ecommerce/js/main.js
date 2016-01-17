@@ -15,6 +15,12 @@ function main() {
     $(".main-container").show();
   });
 
+  $(".dropdown").hover(function(){
+    $("#dropdown"+$(this).attr("id")).removeClass("hidden");
+  }, function(){
+	  $("#dropdown"+$(this).attr("id")).addClass("hidden");
+  });
+
   // $("#videoModal").on('show.bs.modal', function(){
   //   var e = '<iframe class="video-player" src="https://www.youtube.com/embed/Y7aEiVwBAdk?autoplay=1&rel=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
   //   $("#videoDiv").append(e);

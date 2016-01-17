@@ -2,6 +2,30 @@
 {% load staticfiles %}
 {% block content %}
   <div class="container">
+    <div class="row">
+      <ul class="nav navbar-nav">
+        {% for directory in directories %}
+        <li class="dropdown" id="menuitem{{directory.id}}">
+          <a href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ directory.name }}<span class="caret"></span></a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% for directory in directories %}
+    <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{directory.id}}">
+      {% for category in directory.categories %}
+      <div class="col-md-3">
+        <h3>{{ category.name }}</h3><br>
+        {% for subcategory in category.subcategories %}
+        <a href="#">{{ subcategory.name }}</a><br>
+        {% endfor %}
+        <br>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="container">
     <ol class="breadcrumb">
       <li><a href="{% url 'home' %}">Home</a></li>
       <li class="active">Stationery</li>
@@ -10,7 +34,7 @@
   <div class="container">
     <div class="row">
       {% for product in products %}
-      <div class="col-sm-6 col-md-4">
+      <div class="col-sm-4 col-md-3">
         <div class="thumbnail">
           <img src="{% static 'ecommerce/img/' %}{{product.image_name}}" alt="">
           <div class="caption">
