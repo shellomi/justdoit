@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import views as auth_views
 from . import models
 
 
@@ -28,6 +29,10 @@ def stationery(request):
     return render(request, 'ecommerce/stationery.html',
                   {'directories': dirs,
                    'products': products})
+
+
+# def login(request):
+#     template_response = auth_views.login()
 
 
 class Dir:
