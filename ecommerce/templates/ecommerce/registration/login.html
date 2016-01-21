@@ -33,17 +33,20 @@
 
   <body>
     <div class="container">
-      <form class="form-signin">
+      <form class="form-signin" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
         <h2 class="form-signin-heading">Please sign in</h2>
         <div class="input-group">
-          <span class="input-group-addon glyphicon glyphicon-envelope" id="email-addon"></span>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" aria-describedby="email-addon" required="" autofocus="">
+          <span class="input-group-addon glyphicon glyphicon-user" id="username-addon"></span>
+          <label for="inputUsername" class="sr-only">Username</label>
+          {{ form.username }}
+          <!-- <input type="text" id="inputUsername" class="form-control" placeholder="Username" aria-describedby="username-addon" required="" autofocus=""> -->
         </div>
         <div class="input-group">
           <span class="input-group-addon glyphicon glyphicon-lock" id="pwd-addon"></span>
           <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" id="inputPassword" class="form-control" placeholder="Password" aria-describedby="pwd-addon" required="">
+          {{ form.password }}
+          <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" aria-describedby="pwd-addon" required=""> -->
         </div>
         <!--<div class="form-group has-feedback">
           <label class="control-label">Username</label>
