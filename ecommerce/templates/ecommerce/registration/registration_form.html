@@ -35,30 +35,9 @@
     <div class="container">
       <form class="form-signin" method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <div class="input-group">
-          <span class="input-group-addon glyphicon glyphicon-envelope" id="email-addon"></span>
-          <label for="{{form.email.id_for_label}}" class="sr-only">Email</label>
-          {{ form.email }}
-          <!-- <input type="text" id="inputUsername" class="form-control" placeholder="Username" aria-describedby="username-addon" required="" autofocus=""> -->
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon glyphicon glyphicon-lock" id="pwd-addon"></span>
-          <label for="{{form.password.id_for_label}}" class="sr-only">Password</label>
-          {{ form.password }}
-          <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" aria-describedby="pwd-addon" required=""> -->
-        </div>
-        <!--<div class="form-group has-feedback">
-          <label class="control-label">Username</label>
-          <i class="glyphicon glyphicon-user form-control-feedback"></i>
-          <input type="text" class="form-control" placeholder="Username" />
-        </div>-->
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <h2 class="form-signin-heading">Create account</h2>
+        {{ form }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create your account</button>
       </form>
     </div>
     <!-- Bootstrap core JavaScript

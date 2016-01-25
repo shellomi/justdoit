@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.contrib.auth import views as auth_views
-from . import models
+from registration.views import RegistrationView as BaseRegistrationView
+from . import models, forms
 
 
 def home(request):
@@ -63,3 +63,9 @@ class Sub:
 
     def __str__(self):
         return self.name
+
+
+class RegistrationView(BaseRegistrationView):
+    """docstring for RegistrationView"""
+    form_class = forms.RegistrationForm
+    template_name = 'ecommerce/registration/registration_form.html'

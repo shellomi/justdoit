@@ -126,3 +126,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 LOGIN_REDIRECT_URL = '/'
+AUTH_USER_MODEL = 'ecommerce.Patron'
+
+# Settings for django-registration package
+# ACCOUNT_ACTIVATION_DAYS = 30
+# REGISTRATION_OPEN = ''
+# REGISTRATION_SALT = ''
