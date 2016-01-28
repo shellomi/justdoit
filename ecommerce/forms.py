@@ -7,9 +7,9 @@ from registration.forms import RegistrationForm as BaseRegistrationForm
 
 class CustomAuthenticationForm(auth_forms.AuthenticationForm):
     """docstring for CustomAuthenticationForm"""
-    email = django_forms.EmailField(widget=django_forms.EmailInput(attrs={'required': '', 'autofocus': '', 'placeholder': 'Email',
-                                                                          'class': 'form-control',
-                                                                          'aria-describedby': 'email-addon'}))
+    username = django_forms.EmailField(widget=django_forms.EmailInput(attrs={'required': '', 'autofocus': '', 'placeholder': 'Email',
+                                                                             'class': 'form-control',
+                                                                             'aria-describedby': 'email-addon'}))
 
     password = django_forms.CharField(label=_("Password"),
                                       widget=django_forms.PasswordInput(attrs={'required': '', 'placeholder': 'Password',

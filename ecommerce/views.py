@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from registration.views import RegistrationView as BaseRegistrationView
+from registration.backends.hmac.views import RegistrationView as BaseRegistrationView, ActivationView as BaseActivationView
 from . import models, forms
 
 
@@ -69,3 +69,10 @@ class RegistrationView(BaseRegistrationView):
     """docstring for RegistrationView"""
     form_class = forms.RegistrationForm
     template_name = 'ecommerce/registration/registration_form.html'
+    email_body_template = 'ecommerce/registration/activation_email.txt'
+    email_subject_template = 'ecommerce/registration/activation_email_subject.txt'
+
+
+class ActivationView(BaseActivationView):
+    """docstring for ActivationView"""
+    template_name = 'ecommerce/registration/activate.html'

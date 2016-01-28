@@ -129,6 +129,14 @@ LOGIN_REDIRECT_URL = '/'
 AUTH_USER_MODEL = 'ecommerce.Patron'
 
 # Settings for django-registration package
-# ACCOUNT_ACTIVATION_DAYS = 30
+ACCOUNT_ACTIVATION_DAYS = 30
 # REGISTRATION_OPEN = ''
 # REGISTRATION_SALT = ''
+
+# Settings for sending mail
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djangouser29'
+EMAIL_HOST_PASSWORD = 'iamlegend'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'djangouser29@gmail.com'

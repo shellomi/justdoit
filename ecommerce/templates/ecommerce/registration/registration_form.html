@@ -33,7 +33,7 @@
 
   <body>
     <div class="container">
-      <form class="form-signin" method="post" action="{% url 'login' %}">
+      <form class="form-signin" method="post" action="{% url 'registration_register' %}">
         {% csrf_token %}
         <h2 class="form-signin-heading">Create account</h2>
         {{ form }}
