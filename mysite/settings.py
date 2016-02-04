@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+from oscar import OSCAR_MAIN_TEMPLATE_DIR, get_core_apps
+from oscar.defaults import *
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,8 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ecommerce'
-]
+    'ecommerce',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    # 'compressor',
+    'widget_tweaks',
+] + get_core_apps()
+
+SITE_ID = 1
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +57,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oscar.apps.basket.middleware.BasketMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -56,7 +66,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [OSCAR_MAIN_TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +74,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'oscar.apps.search.context_processors.search_form',
+                'oscar.apps.promotions.context_processors.promotions',
+                'oscar.apps.checkout.context_processors.checkout',
+                'oscar.apps.customer.notifications.context_processors.notifications',
+                'oscar.core.context_processors.metadata',
             ],
         },
     },
@@ -140,3 +155,31 @@ EMAIL_HOST_PASSWORD = 'iamlegend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'djangouser29@gmail.com'
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
+
+# Sample order/line status settings. This is quite simplistic. It's like you'll
+# want to override the set_status method on the order object to do more
+# sophisticated things.
+OSCAR_INITIAL_ORDER_STATUS = 'Pending'
+OSCAR_INITIAL_LINE_STATUS = 'Pending'
+
+# This dict defines the new order statuses than an order can move to
+OSCAR_ORDER_STATUS_PIPELINE = {
+    'Pending': ('Being processed', 'Cancelled',),
+    'Being processed': ('Complete', 'Cancelled',),
+    'Cancelled': (),
+    'Complete': (),
+}
+
+# This dict defines the line statuses that will be set when an order's status
+# is changed
+OSCAR_ORDER_STATUS_CASCADE = {
+    'Being processed': 'Being processed',
+    'Cancelled': 'Cancelled',
+    'Complete': 'Shipped',
+}
