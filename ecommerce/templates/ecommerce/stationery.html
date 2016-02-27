@@ -1,23 +1,30 @@
 {% extends 'ecommerce/base.html' %}
 {% load staticfiles %}
+{% load basket_tags %}
+{% load promotion_tags %}
+{% load category_tags %}
+{% load product_tags %}
+{% load rootcategories_tags %}
+
 {% block content %}
   <div class="container">
     <div class="row">
       <ul class="nav navbar-nav">
-        {% for directory in directories %}
-        <li class="dropdown" id="menuitem{{directory.id}}">
-          <a href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ directory.name }}<span class="caret"></span></a>
+      {% root_categories as roots %}
+        {% for root in roots %}
+        <li class="dropdown" id="menuitem{{root.id}}">
+          <a href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ root.name }}<span class="caret"></span></a>
         </li>
         {% endfor %}
       </ul>
     </div>
-    {% for directory in directories %}
-    <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{directory.id}}">
-      {% for category in directory.categories %}
+    {% for root in roots %}
+    <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{root.id}}">
+      {% for category in root.get_children %}
       <div class="col-md-3">
         <h3>{{ category.name }}</h3><br>
-        {% for subcategory in category.subcategories %}
-        <a href="#">{{ subcategory.name }}</a><br>
+        {% for subcategory in category.get_children %}
+        <a href={{ subcategory.get_absolute_url }}>{{ subcategory.name }}</a><br>
         {% endfor %}
         <br>
       </div>
@@ -26,10 +33,16 @@
     {% endfor %}
   </div>
   <div class="container">
-    <ol class="breadcrumb">
-      <li><a href="{% url 'home' %}">Home</a></li>
-      <li class="active">Stationery</li>
-    </ol>
+    <ul class="breadcrumb">
+        <li><a href="{{ homepage_url }}">Home</a></li>
+        {% for category in category.get_ancestors %}
+            <li>
+                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+        
+        <li class="active">{{ category.name }}</li>
+    </ul>
   </div>
   <div class="container">
     <div class="row">
@@ -48,4 +61,47 @@
       {% endfor %}
     </div>
   </div>
+
+{#  <div class="container">#}
+{#    {% category_tree as tree_categories %}#}
+{#    {% if tree_categories %}#}
+{#    <div class="col-md-3">#}
+{#      <ul class="nav nav-list">#}
+{#          {% for tree_category, info in tree_categories %}#}
+{#              <li>#}
+{#                  <a href="{{ tree_category.get_absolute_url }}">#}
+{#                      {% if tree_category.pk == category.pk %}#}
+{#                          <strong>{{ tree_category.name }}</strong>#}
+{#                      {% else %}#}
+{#                          {{ tree_category.name }}#}
+{#                      {% endif %}#}
+{#                  </a>#}
+{##}
+{#                  {% if info.has_children %}<ul>{% else %}</li>{% endif %}#}
+{#                  {% for n in info.num_to_close %}#}
+{#                      </ul></li>#}
+{#                  {% endfor %}#}
+{#          {% endfor %}#}
+{#      </ul>#}
+{#    </div>#}
+{#      {% endif %}#}
+{#  </div>#}
+
+  <!-- <div class="container">
+    <div class="row">
+      {% for product in products %}
+      <div class="col-sm-4 col-md-3">
+        <div class="thumbnail">
+          <img src="{% static 'ecommerce/img/' %}{{product.image_name}}" alt="">
+          <div class="caption">
+            <h3>{{ product.name }}</h3>
+            <p>
+              Price: {{ product.price }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div> -->
 {% endblock %}

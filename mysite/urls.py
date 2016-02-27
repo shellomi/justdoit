@@ -20,6 +20,6 @@ from oscar.app import application
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'', include('ecommerce.urls')),
+    url(r'', include('ecommerce.urls')),
     url(r'', include(application.urls))
     ]
