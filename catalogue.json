@@ -1,0 +1,65 @@
+[
+{
+  "model": "catalogue.productclass",
+  "pk": 1,
+  "fields": {
+    "name": "Stationery",
+    "slug": "stationery",
+    "requires_shipping": true,
+    "track_stock": false,
+    "options": []
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 5,
+  "fields": {
+    "path": "0001",
+    "depth": 1,
+    "numchild": 0,
+    "name": "Stationery",
+    "description": "s",
+    "image": "",
+    "slug": "stationery"
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 6,
+  "fields": {
+    "path": "00010001",
+    "depth": 2,
+    "numchild": 0,
+    "name": "Desk Stationery",
+    "description": "ds",
+    "image": "",
+    "slug": "desk-stationery"
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 7,
+  "fields": {
+    "path": "000100010001",
+    "depth": 3,
+    "numchild": 0,
+    "name": "Glues and adhesives",
+    "description": "ga",
+    "image": "",
+    "slug": "glues-and-adhesives"
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 8,
+  "fields": {
+    "path": "000100010002",
+    "depth": 3,
+    "numchild": 0,
+    "name": "Geometry",
+    "description": "ge",
+    "image": "",
+    "slug": "geometry"
+  }
+}
+]
