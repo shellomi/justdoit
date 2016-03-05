@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     # 'compressor',
     'widget_tweaks',
+    'storages',
 ] + get_core_apps()
 
 SITE_ID = 1
@@ -138,8 +139,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# AWS S3 settings
+AWS_STORAGE_BUCKET_NAME = 'binson1989bucket'
+AWS_ACCESS_KEY_ID = 'AKIAICBCQPNPQH3KQYSQ'
+AWS_SECRET_ACCESS_KEY = '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'
+
+# Tell django-storages that when coming up with the URL for an item in S3 storage, keep
+# it simple - just use this domain plus the path. (If this isn't set, things get complicated).
+# This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
+# We also use it in the next setting.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# This is used by the `static` template tag from `static`, if you're using that. Or if anything else
+# refers directly to STATIC_URL. So it's safest to always set it.
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+
+# Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
+# you run `collectstatic`).
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+# End AWS S3 settings
+
 LOGIN_REDIRECT_URL = '/'
 AUTH_USER_MODEL = 'ecommerce.Patron'
 

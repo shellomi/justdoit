@@ -5,6 +5,8 @@
 {% load category_tags %}
 {% load product_tags %}
 {% load rootcategories_tags %}
+{% load currency_filters %}
+{% load purchase_info_tags %}
 {% load i18n %}
 
 {% block content %}
@@ -79,7 +81,34 @@
         <div class="row">
             {% for product in products %}
                 <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                    {% render_product product %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}">
+                    </a>
+                    <h3><a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">{{ product.get_title|truncatewords:4 }}</a></h3>
+                    {% purchase_info_for_product request product as session %}
+                    {% if session.price.exists %}
+                        {% if session.price.excl_tax == 0 %}
+                            <p class="price_color">{% trans "Free" %}</p>
+                        {% elif session.price.is_tax_known %}
+                            <p class="price_color">{{ session.price.incl_tax|currency:session.price.currency }}</p>
+                        {% else %}
+                            <p class="price_color">{{ session.price.excl_tax|currency:session.price.currency }}</p>
+                        {% endif %}
+                    {% else %}
+                        <p class="price_color">&nbsp;</p>
+                    {% endif %}
+                    {% if not product.is_parent %}
+                        {% if session.availability.is_available_to_buy %}
+                        {% basket_form request product 'single' as basket_form %}
+                            <form action="{% url 'basket:add' pk=product.pk %}" method="post">
+                                {% csrf_token %}
+                                {{ basket_form.as_p }}
+                                <button type="submit" class="btn btn-primary btn-block" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
+                            </form>
+                        {% else %}
+                            <span class="btn btn-default btn-block disabled">{% trans "Add to basket" %}</span>
+                        {% endif %}
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
