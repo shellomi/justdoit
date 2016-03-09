@@ -42,6 +42,34 @@
     </ul>
   </div>
     <div class="container">
+        <form method="get" action="{% url 'search:search' %}" class="navbar-form navbar-right">
+            <div class="form-group">
+            {{ search_form.q }}
+            </div>
+            <input type="submit" value="{% trans "Search" %}" class="btn btn-default" />
+        </form>
+    </div>
+<div class="container">
+<div class="basket-mini pull-right hidden-xs">
+    <strong>{% trans "Basket total:" %}</strong>
+    {% if request.basket.is_tax_known %}
+        {{ request.basket.total_incl_tax|currency:request.basket.currency }}
+    {% else %}
+        {{ request.basket.total_excl_tax|currency:request.basket.currency }}
+    {% endif %}
+
+    <span class="btn-group">
+        <a class="btn btn-default" href="{% url 'basket:summary' %}">{% trans "View basket" %}</a>
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+            <li>{% include "basket/partials/basket_quick.html" %}</li>
+        </ul>
+    </span>
+</div>
+    </div>
+    <div class="container">
   <form method="get" class="form-horizontal">
         {# Render other search params in a hidden block #}
         <div style="display:none">

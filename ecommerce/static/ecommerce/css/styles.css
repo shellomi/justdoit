@@ -156,3 +156,9 @@ body > .main-container {
     z-index: 1001;
     overflow: visible;
 }*/
+
+.price_color {
+  display: block;
+  color: #5cb85c;
+  font-weight: bold;
+}
