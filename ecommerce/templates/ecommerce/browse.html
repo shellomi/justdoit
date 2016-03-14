@@ -10,7 +10,7 @@
 {% load i18n %}
 
 {% block content %}
-  <div class="container">
+  <div class="container visible-md visible-lg">
     <div class="row">
       <ul class="nav navbar-nav">
       {% root_categories as roots %}
@@ -24,7 +24,7 @@
     {% for root in roots %}
     <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{root.id}}">
       {% for category in root.get_children %}
-      <div class="col-md-3">
+      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
         <h3>{{ category.name }}</h3><br>
         {% for subcategory in category.get_children %}
         <a href={{ subcategory.get_absolute_url }}>{{ subcategory.name }}</a><br>
@@ -108,11 +108,12 @@
     {% if products %}
         <div class="row">
             {% for product in products %}
-                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 thumbnail">
                     <a href="{{ product.get_absolute_url }}">
-                        <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}">
-                    </a>
-                    <h3><a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">{{ product.get_title|truncatewords:4 }}</a></h3>
+                        <p>
+                          <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}"/>
+                        </p>
+                    <h3>{{ product.get_title|truncatewords:4 }}</h3>
                     {% purchase_info_for_product request product as session %}
                     {% if session.price.exists %}
                         {% if session.price.excl_tax == 0 %}
@@ -125,6 +126,7 @@
                     {% else %}
                         <p class="price_color">&nbsp;</p>
                     {% endif %}
+                  </a>
                     {% if not product.is_parent %}
                         {% if session.availability.is_available_to_buy %}
                         {% basket_form request product 'single' as basket_form %}

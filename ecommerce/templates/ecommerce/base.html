@@ -31,8 +31,11 @@
         <![endif]-->
   </head>
 
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <body style="font-family:Arial Rounded MT Bold;color:#41281B">
+    {# 1ac497 #}
+    {# #462066 #}
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color:#00aaa0;color:#51281b">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -56,9 +59,9 @@
                 <button type="submit" class="btn btn-success">Sign in</button>
               </form>-->
           <ul class="nav navbar-nav">
-            <li><a href="{% url 'stationery' %}">Stationery</a></li>
-            <li><a href="#">Housekeeping</a></li>
-            <li><a href="#">Eatables</a></li>
+            <li class="dropdown"><a href="{% url 'stationery' %}">Stationery<span class="caret"></span></a></li>
+            <li class="dropdown"><a href="#">Housekeeping<span class="caret"></span></a></li>
+            <li class="dropdown"><a href="#">Eatables<span class="caret"></span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
