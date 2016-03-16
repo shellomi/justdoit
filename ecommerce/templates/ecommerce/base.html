@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load rootcategories_tags %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -31,11 +32,11 @@
         <![endif]-->
   </head>
 
-  <body style="font-family:Arial Rounded MT Bold;color:#41281B">
+  <body>
     {# 1ac497 #}
     {# #462066 #}
-
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color:#00aaa0;color:#51281b">
+    {% root_categories as roots %}
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -59,9 +60,15 @@
                 <button type="submit" class="btn btn-success">Sign in</button>
               </form>-->
           <ul class="nav navbar-nav">
-            <li class="dropdown"><a href="{% url 'stationery' %}">Stationery<span class="caret"></span></a></li>
+            {% for root in roots %}
+                <li class="dropdown" id="menuitem{{root.id}}">
+                  <a href="#" role="button" aria-haspopup="true" aria-expanded="false">{{root.name|upper}} <span class="caret"></span></a>
+                </li>
+            {% endfor %}
+
+            <!--<li class="dropdown"><a href="{% url 'stationery' %}">Stationery<span class="caret"></span></a></li>
             <li class="dropdown"><a href="#">Housekeeping<span class="caret"></span></a></li>
-            <li class="dropdown"><a href="#">Eatables<span class="caret"></span></a></li>
+            <li class="dropdown"><a href="#">Eatables<span class="caret"></span></a></li>-->
           </ul>
           <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
@@ -75,10 +82,23 @@
         <!--/.navbar-collapse -->
       </div>
     </nav>
-    <div class="main-container">
+    <div class="main-container container">
+      {% for root in roots %}
+      <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{root.id}}">
+        {% for category in root.get_children %}
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <h3>{{ category.name }}</h3><br>
+          {% for subcategory in category.get_children %}
+          <a href={{ subcategory.get_absolute_url }}>{{ subcategory.name }}</a><br>
+          {% endfor %}
+          <br>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
     {% block content %}
     {% endblock %}
-    </div>
     <footer class="footer">
       <div class="container">
         <p class="text-muted">&copy; 2015 Company, Inc.</p>
