@@ -130,7 +130,7 @@ body > .main-container {
 }*/
 
 .jdi-dropdown-content {
-    position: absolute;
+    position: fixed;
     width: 1170px;
     border-top: 0;
     background-color: #fff;
