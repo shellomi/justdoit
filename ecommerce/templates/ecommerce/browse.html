@@ -7,72 +7,48 @@
 {% load rootcategories_tags %}
 {% load currency_filters %}
 {% load purchase_info_tags %}
+{% load display_tags %}
 {% load i18n %}
 
 {% block content %}
-  <!-- <div class="container visible-md visible-lg">
-    <div class="row">
-      <ul class="nav navbar-nav">
-      {% root_categories as roots %}
-        {% for root in roots %}
-        <li class="dropdown" id="menuitem{{root.id}}">
-          <a href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ root.name }}<span class="caret"></span></a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% for root in roots %}
-    <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{root.id}}">
-      {% for category in root.get_children %}
-      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-        <h3>{{ category.name }}</h3><br>
-        {% for subcategory in category.get_children %}
-        <a href={{ subcategory.get_absolute_url }}>{{ subcategory.name }}</a><br>
-        {% endfor %}
-        <br>
-      </div>
-      {% endfor %}
-    </div>
-    {% endfor %}
-  </div> -->
   <div class="container">
     <ul class="breadcrumb">
         <li><a href="{{ homepage_url }}">Home</a></li>
         <li class="active">{{ summary }}</li>
     </ul>
   </div>
-    <div class="container">
-        <form method="get" action="{% url 'search:search' %}" class="navbar-form navbar-right">
-            <div class="input-group">
-            {{ search_form.q }}
-            <span class="input-group-btn">
-              <input type="submit" value="{% trans "Go!" %}" class="btn btn-default" />
-            </span>
-            </div>
-        </form>
-    </div>
-<div class="container">
-<div class="basket-mini pull-right hidden-xs">
-    <strong>{% trans "Basket total:" %}</strong>
-    {% if request.basket.is_tax_known %}
-        {{ request.basket.total_incl_tax|currency:request.basket.currency }}
-    {% else %}
-        {{ request.basket.total_excl_tax|currency:request.basket.currency }}
-    {% endif %}
+  <div class="container">
+      <form method="get" action="{% url 'search:search' %}" class="navbar-form navbar-right">
+          <div class="input-group">
+          {{ search_form.q }}
+          <span class="input-group-btn">
+            <input type="submit" value="{% trans "Go!" %}" class="btn btn-default" />
+          </span>
+          </div>
+      </form>
+  </div>
+  <div class="container">
+    <div class="basket-mini pull-right hidden-xs">
+      <strong>{% trans "Basket total:" %}</strong>
+      {% if request.basket.is_tax_known %}
+          {{ request.basket.total_incl_tax|currency:request.basket.currency }}
+      {% else %}
+          {{ request.basket.total_excl_tax|currency:request.basket.currency }}
+      {% endif %}
 
-    <span class="btn-group">
-        <a class="btn btn-default" href="{% url 'basket:summary' %}">{% trans "View basket" %}</a>
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-            <li>{% include "basket/partials/basket_quick.html" %}</li>
-        </ul>
-    </span>
-</div>
+      <span class="btn-group">
+          <a class="btn btn-default" href="{% url 'basket:summary' %}">{% trans "View basket" %}</a>
+          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+              <li>{% include "basket/partials/basket_quick.html" %}</li>
+          </ul>
+      </span>
     </div>
-    <div class="container">
-  <form method="get" class="form-horizontal">
+  </div>
+  <div class="container">
+    <form method="get" class="form-horizontal">
         {# Render other search params in a hidden block #}
         <div style="display:none">
             {% for value in selected_facets %}
@@ -145,12 +121,39 @@
             {% endfor %}
         </div>
         <div class="row">
-            {% include "partials/pagination.html" %}
+          {% if paginator.num_pages > 1 %}
+            {# {% include "partials/pagination.html" %} #}
+            <ul class="pagination">
+              {% if page_obj.has_previous %}
+                  <li>
+                    <a href="?{% get_parameters page %}page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+              {% endif %}
+              {% for page_me in paginator.page_range %}
+                  {% if page_obj.number == forloop.counter %}
+                      <li class="active">
+                        <a href="?{% get_parameters page %}page={{ forloop.counter }}">{{forloop.counter}}</a>
+                      </li>
+                  {% else %}
+                      <li><a href="?{% get_parameters page %}page={{ forloop.counter }}">{{forloop.counter}}</a></li>
+                  {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                  <li>
+                    <a href="?{% get_parameters page %}page={{ page_obj.next_page_number }}" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+              {% endif %}
+            </ul>
+          {% endif %}
         </div>
     {% else %}
         <div class="row">
         <p class="nonefound">{% trans "No products found." %}</p>
         </div>
     {% endif %}
-    </div>
+  </div>
 {% endblock %}

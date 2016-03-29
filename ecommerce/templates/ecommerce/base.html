@@ -74,8 +74,17 @@
 
           <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.username}}</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.company}}</a></li>
             <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span></a></li>
+            <li>
+              <a href="{% url 'basket:summary' %}">
+                <span class="glyphicon glyphicon-shopping-cart"></span> Cart
+                {% if request.basket.num_lines %}
+                    <span class="badge">{{request.basket.num_lines}}</span>
+                {% endif %}
+              </a>
+            </li>
+            </li>
           {% else %}
             <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
           {% endif %}
