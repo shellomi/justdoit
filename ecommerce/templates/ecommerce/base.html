@@ -109,8 +109,8 @@
       {% for root in roots %}
       <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{root.id}}">
         {% for category in root.get_children %}
-        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-          <h5>{{ category.name }}</h5><br>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="border-color:red;border-style:solid">
+          <h5>{{ category.name }}</h5>
           {% for subcategory in category.get_children %}
           <a href={{ subcategory.get_absolute_url }}>{{ subcategory.name }}</a><br>
           {% endfor %}

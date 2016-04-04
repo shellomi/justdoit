@@ -17,7 +17,7 @@
         <li class="active">{{ summary }}</li>
     </ul>
   </div>
-  <div class="container">
+  <!-- <div class="container">
       <form method="get" action="{% url 'search:search' %}" class="navbar-form navbar-right">
           <div class="input-group">
           {{ search_form.q }}
@@ -26,8 +26,8 @@
           </span>
           </div>
       </form>
-  </div>
-  <div class="container">
+  </div> -->
+  <!-- <div class="container">
     <div class="basket-mini pull-right hidden-xs">
       <strong>{% trans "Basket total:" %}</strong>
       {% if request.basket.is_tax_known %}
@@ -46,7 +46,7 @@
           </ul>
       </span>
     </div>
-  </div>
+  </div> -->
   <div class="container">
     <form method="get" class="form-horizontal">
         {# Render other search params in a hidden block #}
@@ -106,15 +106,16 @@
                     {% endif %}
                   </a>
                     {% if not product.is_parent %}
-                        {% if session.availability.is_available_to_buy %}
+                        {% is_product_in_cart request product as disable_cart %}
+                        {% if session.availability.is_available_to_buy and not disable_cart %}
                         {% basket_form request product 'single' as basket_form %}
                             <form action="{% url 'basket:add' pk=product.pk %}" method="post">
                                 {% csrf_token %}
                                 {{ basket_form.as_p }}
-                                <button type="submit" class="btn btn-primary btn-block" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
+                                <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
                             </form>
                         {% else %}
-                            <span class="btn btn-default btn-block disabled">{% trans "Add to basket" %}</span>
+                            <span class="btn btn-default disabled" title="Product already added to cart">{% trans "Add to basket" %}</span>
                         {% endif %}
                     {% endif %}
                 </div>
@@ -122,15 +123,12 @@
         </div>
         <div class="row">
           {% if paginator.num_pages > 1 %}
-            {# {% include "partials/pagination.html" %} #}
             <ul class="pagination">
-              {% if page_obj.has_previous %}
-                  <li>
-                    <a href="?{% get_parameters page %}page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-              {% endif %}
+              <li>
+                <a href="?{% get_parameters page %}page=1" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
               {% for page_me in paginator.page_range %}
                   {% if page_obj.number == forloop.counter %}
                       <li class="active">
@@ -140,13 +138,11 @@
                       <li><a href="?{% get_parameters page %}page={{ forloop.counter }}">{{forloop.counter}}</a></li>
                   {% endif %}
               {% endfor %}
-              {% if page_obj.has_next %}
-                  <li>
-                    <a href="?{% get_parameters page %}page={{ page_obj.next_page_number }}" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-              {% endif %}
+              <li>
+                <a href="?{% get_parameters page %}page={{ paginator.num_pages }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
             </ul>
           {% endif %}
         </div>

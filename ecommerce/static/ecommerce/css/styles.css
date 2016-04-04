@@ -5,7 +5,8 @@ html{
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  margin-bottom: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .footer {
@@ -109,7 +110,8 @@ body > .main-container {
 /*.navbar-nav>li>a {
     color: #fff;
 }*/
-.navbar-default{
+
+/*.navbar-default{
     background-color: #333;
 }
 .navbar-default .navbar-nav>li>a:link,
@@ -117,13 +119,13 @@ body > .main-container {
     color: #fff;
 }
 .navbar-default .navbar-nav>li>a:hover {
-    /*background-color: transparent;*/
     color: #333;
     background-color: #fff;
 }
 .navbar-default .navbar-nav>li>a:active {
     color: #fff;
-}
+}*/
+
 /*.navbar-nav>li>a:hover{
     color: #333;
     background-color: #fff;
