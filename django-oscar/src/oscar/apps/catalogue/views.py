@@ -115,7 +115,8 @@ class CatalogueView(TemplateView):
     Browse all products in the catalogue
     """
     context_object_name = "products"
-    template_name = 'catalogue/browse.html'
+    # template_name = 'catalogue/browse.html'
+    template_name = 'ecommerce/browse.html'
 
     def get(self, request, *args, **kwargs):
         try:

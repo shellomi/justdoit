@@ -27,3 +27,16 @@ def basket_form(request, product, quantity_type='single'):
     form = form_class(request.basket, product=product, initial=initial)
 
     return form
+
+
+@register.simple_tag()
+def is_product_in_cart(request, product):
+    if not isinstance(product, Product):
+        return False
+    try:
+        # if product.pk != 1:
+        #     return False
+        product_qty = request.basket.line_quantity(product, request.basket.strategy.fetch_for_product(product).stockrecord)
+        return product_qty > 0
+    except Exception as e:
+        return False
