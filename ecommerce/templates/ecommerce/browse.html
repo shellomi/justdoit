@@ -11,10 +11,10 @@
 {% load i18n %}
 
 {% block content %}
-  <div class="container">
+  <div class="container" style="padding-top:25px;">
     <ul class="breadcrumb">
-        <li><a href="{{ homepage_url }}">Home</a></li>
-        <li class="active">{{ summary }}</li>
+      <li><a href="{{ homepage_url }}">Home</a></li>
+      <li class="active">{{ summary }}</li>
     </ul>
   </div>
   <!-- <div class="container">
@@ -48,6 +48,8 @@
     </div>
   </div> -->
   <div class="container">
+    <h2>{{ summary }}</h2>
+    <hr />
     <form method="get" class="form-horizontal">
         {# Render other search params in a hidden block #}
         <div style="display:none">
@@ -82,7 +84,8 @@
             </p>
         {% endif %}
     </form>
-
+    <!-- </div> -->
+    <br />
     {% if products %}
         <div class="row">
             {% for product in products %}
@@ -104,7 +107,7 @@
                     {% else %}
                         <p class="price_color">&nbsp;</p>
                     {% endif %}
-                  </a>
+                    </a>
                     {% if not product.is_parent %}
                         {% is_product_in_cart request product as disable_cart %}
                         {% if session.availability.is_available_to_buy and not disable_cart %}
@@ -116,18 +119,19 @@
                                 </form>
                         {% else %}
                             <!-- <span class="btn btn-default disabled" title="Product already added to cart">{% trans "Add to basket" %}</span> -->
-                            <span class="label label-success-bg">Added to cart</span>
+                            <!--<span class="label label-success">Added to cart</span>-->
+                            <button class="btn btn-success disabled">{% trans "Added to cart" %}</button>
                         {% endif %}
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
-        <div class="row">
+        <div class="row text-center">
           {% if paginator.num_pages > 1 %}
             <ul class="pagination">
               <li>
                 <a href="?{% get_parameters page %}page=1" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
+                  <span aria-hidden="true">&laquo; Previous</span>
                 </a>
               </li>
               {% for page_me in paginator.page_range %}
@@ -141,7 +145,7 @@
               {% endfor %}
               <li>
                 <a href="?{% get_parameters page %}page={{ paginator.num_pages }}" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
+                  <span aria-hidden="true">Next &raquo;</span>
                 </a>
               </li>
             </ul>
