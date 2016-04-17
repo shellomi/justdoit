@@ -62,8 +62,24 @@
               </form>-->
           <ul class="nav navbar-nav">
             {% for root in roots %}
-                <li class="dropdown" id="menuitem{{root.id}}">
-                  <a href="#" role="button" aria-haspopup="true" aria-expanded="false">{{root.name}} <span class="caret"></span></a>
+                <li class="dropdown dropdown-large" id="menuitem{{root.id}}">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{root.name}} <span class="caret"></span></a>
+                  <ul class="dropdown-menu dropdown-menu-large row">
+                    {% for category in root.get_children %}
+                        <li class="col-sm-3 col-md-3">
+                          <ul>
+                            <li class="dropdown-header">{{category.name}}</li>
+                            {% for subcategory in category.get_children %}
+                                <li>
+                                  <a href="{{subcategory.get_absolute_url}}">{{subcategory.name}}</a>
+                                </li>
+                            {% endfor %}
+                            <li class="divider"/>
+                          </ul>
+                        </li>
+                    {% endfor %}
+
+                  </ul>
                 </li>
             {% endfor %}
 
@@ -83,7 +99,6 @@
                     <span class="badge">{{request.basket.num_lines}}</span>
                 {% endif %}
               </a>
-            </li>
             </li>
           {% else %}
             <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -105,7 +120,7 @@
         <!--/.navbar-collapse -->
       </div>
     </nav>
-    <div class="main-container container">
+    <!-- <div class="main-container container">
       {% for root in roots %}
       <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{root.id}}">
         {% for category in root.get_children %}
@@ -119,7 +134,7 @@
         {% endfor %}
       </div>
       {% endfor %}
-    </div>
+    </div> -->
     {% block content %}
     {% endblock %}
     <footer class="footer">

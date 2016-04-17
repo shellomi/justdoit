@@ -8,10 +8,11 @@
 {% load currency_filters %}
 {% load purchase_info_tags %}
 {% load display_tags %}
+{% load thumbnail %}
 {% load i18n %}
 
 {% block content %}
-  <div class="container" style="padding-top:25px;">
+  <div class="container">
     <ul class="breadcrumb">
       <li><a href="{{ homepage_url }}">Home</a></li>
       <li class="active">{{ summary }}</li>
@@ -89,10 +90,17 @@
     {% if products %}
         <div class="row">
             {% for product in products %}
-                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 thumbnail" style="border-color:red;border-style:solid">
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 thumbnail">
+                  <div class="product-border">
                     <a href="{{ product.get_absolute_url }}">
                         <p>
-                          <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}"/>
+                          {% with product.primary_image as image %}
+                              {% thumbnail image.original "220x155" upscale=False as thumb %}
+                                <img src="https://binson1989bucket.s3.amazonaws.com/media/cache/d3/78/d3788003ed376beb0d96464785d54bcd.jpg" alt="{{ product.get_title }}"/>
+                              {% endthumbnail %}
+                          {% endwith %}
+
+                          <!-- <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}"/> -->
                         </p>
                     <h3>{{ product.get_title|truncatewords:4 }}</h3>
                     {% purchase_info_for_product request product as session %}
@@ -108,21 +116,24 @@
                         <p class="price_color">&nbsp;</p>
                     {% endif %}
                     </a>
-                    {% if not product.is_parent %}
-                        {% is_product_in_cart request product as disable_cart %}
-                        {% if session.availability.is_available_to_buy and not disable_cart %}
-                            {% basket_form request product 'single' as basket_form %}
-                                <form action="{% url 'basket:add' pk=product.pk %}" method="post">
-                                    {% csrf_token %}
-                                    {{ basket_form.as_p }}
-                                    <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
-                                </form>
-                        {% else %}
-                            <!-- <span class="btn btn-default disabled" title="Product already added to cart">{% trans "Add to basket" %}</span> -->
-                            <!--<span class="label label-success">Added to cart</span>-->
-                            <button class="btn btn-success disabled">{% trans "Added to cart" %}</button>
-                        {% endif %}
-                    {% endif %}
+                    <p>
+                      {% if not product.is_parent %}
+                          {% is_product_in_cart request product as disable_cart %}
+                          {% if session.availability.is_available_to_buy and not disable_cart %}
+                              {% basket_form request product 'single' as basket_form %}
+                                  <form action="{% url 'basket:add' pk=product.pk %}" method="post">
+                                      {% csrf_token %}
+                                      {{ basket_form.as_p }}
+                                      <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
+                                  </form>
+                          {% else %}
+                              <!-- <span class="btn btn-default disabled" title="Product already added to cart">{% trans "Add to basket" %}</span> -->
+                              <!--<span class="label label-success">Added to cart</span>-->
+                              <button class="btn btn-success disabled">{% trans "Added to cart" %}</button>
+                          {% endif %}
+                      {% endif %}
+                    </p>
+                  </div>
                 </div>
             {% endfor %}
         </div>
