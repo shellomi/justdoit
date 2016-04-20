@@ -126,11 +126,16 @@ body > .main-container {
 .navbar-default .navbar-nav>li>a {
     color: white;
 }
-.navbar-default .navbar-nav>li>a:link,
+/*.navbar-default .navbar-nav>li>a:link,
 .navbar-default .navbar-nav>li>a:visited {
     color: #fff;
-}
-.navbar-default .navbar-nav>li>a:hover {
+}*/
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>li>a:active,
+.navbar-default .navbar-nav>.open>a:active {
     color: black;
     background-color: white;
 }

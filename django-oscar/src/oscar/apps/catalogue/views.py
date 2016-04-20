@@ -145,7 +145,8 @@ class ProductCategoryView(TemplateView):
     Browse products in a given category
     """
     context_object_name = "products"
-    template_name = 'catalogue/category.html'
+    # template_name = 'catalogue/category.html'
+    template_name = 'ecommerce/category.html'
     enforce_paths = True
 
     def get(self, request, *args, **kwargs):

@@ -11,13 +11,13 @@
 {% load thumbnail %}
 {% load i18n %}
 
-{% block content %}
-  <div class="container">
-    <ul class="breadcrumb">
-      <li><a href="{{ homepage_url }}"><span class="glyphicon glyphicon-home"></span></a></li>
-      <li class="active">{{ summary }}</li>
-    </ul>
-  </div>
+{% block body %}
+    {% block breadcrumbs %}
+      <ul class="breadcrumb">
+        <li><a href="{{ homepage_url }}"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="active">{{ summary }}</li>
+      </ul>
+    {% endblock breadcrumbs %}
   <!-- <div class="container">
       <form method="get" action="{% url 'search:search' %}" class="navbar-form navbar-right">
           <div class="input-group">
@@ -48,124 +48,126 @@
       </span>
     </div>
   </div> -->
-  <div class="container">
-    <h2>{{ summary }}</h2>
-    <hr / />
-    <form method="get" class="form-horizontal">
-        {# Render other search params in a hidden block #}
-        <div style="display:none">
-            {% for value in selected_facets %}
-                <input name="selected_facets" value="{{ value }}" />
-            {% endfor %}
-            {{ form.q }}
-        </div>
-
-        {% if paginator.count %}
-            {% if paginator.num_pages > 1 %}
-                {% blocktrans with start=page_obj.start_index end=page_obj.end_index count num_results=paginator.count %}
-                    <strong>{{ num_results }}</strong> result - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
-                {% plural %}
-                    <strong>{{ num_results }}</strong> results - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
-                {% endblocktrans %}
-            {% else %}
-                {% blocktrans count num_results=paginator.count %}
-                    <strong>{{ num_results }}</strong> result.
-                {% plural %}
-                    <strong>{{ num_results }}</strong> results.
-                {% endblocktrans %}
-            {% endif %}
-            {% if form %}
-                <div class="pull-right">
-                    {% include "partials/form_field.html" with field=form.sort_by %}
-                </div>
-            {% endif %}
-        {% else %}
-            <p>
-                {% trans "<strong>0</strong> results." %}
-            </p>
-        {% endif %}
-    </form>
-    <!-- </div> -->
-    <br />
-    {% if products %}
-        <div class="row">
-            {% for product in products %}
-                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 thumbnail">
-                  <div class="product-border">
-                    <a href="{{ product.get_absolute_url }}">
-                        <p>
-                          {% with product.primary_image as image %}
-                              {% thumbnail image.original "220x155" upscale=False as thumb %}
-                                <img src="https://binson1989bucket.s3.amazonaws.com/media/cache/d3/78/d3788003ed376beb0d96464785d54bcd.jpg" alt="{{ product.get_title }}"/>
-                              {% endthumbnail %}
-                          {% endwith %}
-
-                          <!-- <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}"/> -->
-                        </p>
-                    <h3>{{ product.get_title|truncatewords:4 }}</h3>
-                    {% purchase_info_for_product request product as session %}
-                    {% if session.price.exists %}
-                        {% if session.price.excl_tax == 0 %}
-                            <p class="price_color">{% trans "Free" %}</p>
-                        {% elif session.price.is_tax_known %}
-                            <p class="price_color">{{ session.price.incl_tax|currency:session.price.currency }}</p>
-                        {% else %}
-                            <p class="price_color">{{ session.price.excl_tax|currency:session.price.currency }}</p>
-                        {% endif %}
-                    {% else %}
-                        <p class="price_color">&nbsp;</p>
-                    {% endif %}
-                    </a>
-                    <p>
-                      {% if not product.is_parent %}
-                          {% is_product_in_cart request product as disable_cart %}
-                          {% if session.availability.is_available_to_buy and not disable_cart %}
-                              {% basket_form request product 'single' as basket_form %}
-                                  <form action="{% url 'basket:add' pk=product.pk %}" method="post">
-                                      {% csrf_token %}
-                                      {{ basket_form.as_p }}
-                                      <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
-                                  </form>
-                          {% else %}
-                              <!-- <span class="btn btn-default disabled" title="Product already added to cart">{% trans "Add to basket" %}</span> -->
-                              <!--<span class="label label-success">Added to cart</span>-->
-                              <button class="btn btn-success disabled">{% trans "Added to cart" %}</button>
-                          {% endif %}
-                      {% endif %}
-                    </p>
-                  </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="row text-center">
-          {% if paginator.num_pages > 1 %}
-            <ul class="pagination">
-              <li>
-                <a href="?{% get_parameters page %}page=1" aria-label="Previous">
-                  <span aria-hidden="true">&laquo; Previous</span>
-                </a>
-              </li>
-              {% for page_me in paginator.page_range %}
-                  {% if page_obj.number == forloop.counter %}
-                      <li class="active">
-                        <a href="?{% get_parameters page %}page={{ forloop.counter }}">{{forloop.counter}}</a>
-                      </li>
-                  {% else %}
-                      <li><a href="?{% get_parameters page %}page={{ forloop.counter }}">{{forloop.counter}}</a></li>
-                  {% endif %}
+    {% block headertext %}
+      <h2>{{ summary }}</h2>
+    {% endblock headertext %}
+    <hr />
+    {% block content %}
+      <form method="get" class="form-horizontal">
+          {# Render other search params in a hidden block #}
+          <div style="display:none">
+              {% for value in selected_facets %}
+                  <input name="selected_facets" value="{{ value }}" />
               {% endfor %}
-              <li>
-                <a href="?{% get_parameters page %}page={{ paginator.num_pages }}" aria-label="Next">
-                  <span aria-hidden="true">Next &raquo;</span>
-                </a>
-              </li>
-            </ul>
+              {{ form.q }}
+          </div>
+
+          {% if paginator.count %}
+              {% if paginator.num_pages > 1 %}
+                  {% blocktrans with start=page_obj.start_index end=page_obj.end_index count num_results=paginator.count %}
+                      <strong>{{ num_results }}</strong> result - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
+                  {% plural %}
+                      <strong>{{ num_results }}</strong> results - showing <strong>{{ start }}</strong> to <strong>{{ end }}</strong>.
+                  {% endblocktrans %}
+              {% else %}
+                  {% blocktrans count num_results=paginator.count %}
+                      <strong>{{ num_results }}</strong> result
+                  {% plural %}
+                      <strong>{{ num_results }}</strong> results
+                  {% endblocktrans %}
+              {% endif %}
+              {% if form %}
+                  <div class="pull-right">
+                      {% include "partials/form_field.html" with field=form.sort_by %}
+                  </div>
+              {% endif %}
+          {% else %}
+              <p>
+                  {% trans "<strong>0</strong> results." %}
+              </p>
           {% endif %}
-        </div>
-    {% else %}
-        <div class="row">
-        <p class="nonefound">{% trans "No products found." %}</p>
-        </div>
-    {% endif %}
-  </div>
-{% endblock %}
+      </form>
+    <!-- </div> -->
+      <br />
+      {% if products %}
+          <div class="row">
+              {% for product in products %}
+                  <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 thumbnail">
+                    <div class="product-border">
+                      <a href="{{ product.get_absolute_url }}">
+                          <p>
+                            {% with product.primary_image as image %}
+                                {% thumbnail image.original "220x155" upscale=False as thumb %}
+                                  <img src="https://binson1989bucket.s3.amazonaws.com/media/cache/d3/78/d3788003ed376beb0d96464785d54bcd.jpg" alt="{{ product.get_title }}"/>
+                                {% endthumbnail %}
+                            {% endwith %}
+
+                            <!-- <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}"/> -->
+                          </p>
+                      <h3>{{ product.get_title|truncatewords:4 }}</h3>
+                      {% purchase_info_for_product request product as session %}
+                      {% if session.price.exists %}
+                          {% if session.price.excl_tax == 0 %}
+                              <p class="price_color">{% trans "Free" %}</p>
+                          {% elif session.price.is_tax_known %}
+                              <p class="price_color">{{ session.price.incl_tax|currency:session.price.currency }}</p>
+                          {% else %}
+                              <p class="price_color">{{ session.price.excl_tax|currency:session.price.currency }}</p>
+                          {% endif %}
+                      {% else %}
+                          <p class="price_color">&nbsp;</p>
+                      {% endif %}
+                      </a>
+                      <p>
+                        {% if not product.is_parent %}
+                            {% is_product_in_cart request product as disable_cart %}
+                            {% if session.availability.is_available_to_buy and not disable_cart %}
+                                {% basket_form request product 'single' as basket_form %}
+                                    <form action="{% url 'basket:add' pk=product.pk %}" method="post">
+                                        {% csrf_token %}
+                                        {{ basket_form.as_p }}
+                                        <button type="submit" class="btn btn-primary" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to basket" %}</button>
+                                    </form>
+                            {% else %}
+                                <!-- <span class="btn btn-default disabled" title="Product already added to cart">{% trans "Add to basket" %}</span> -->
+                                <!--<span class="label label-success">Added to cart</span>-->
+                                <button class="btn btn-success disabled">{% trans "Added to cart" %}</button>
+                            {% endif %}
+                        {% endif %}
+                      </p>
+                    </div>
+                  </div>
+              {% endfor %}
+          </div>
+          <div class="row text-center">
+            {% if paginator.num_pages > 1 %}
+              <ul class="pagination">
+                <li>
+                  <a href="?{% get_parameters page %}page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo; Previous</span>
+                  </a>
+                </li>
+                {% for page_me in paginator.page_range %}
+                    {% if page_obj.number == forloop.counter %}
+                        <li class="active">
+                          <a href="?{% get_parameters page %}page={{ forloop.counter }}">{{forloop.counter}}</a>
+                        </li>
+                    {% else %}
+                        <li><a href="?{% get_parameters page %}page={{ forloop.counter }}">{{forloop.counter}}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li>
+                  <a href="?{% get_parameters page %}page={{ paginator.num_pages }}" aria-label="Next">
+                    <span aria-hidden="true">Next &raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            {% endif %}
+          </div>
+      {% else %}
+          <div class="row">
+          <p class="nonefound">{% trans "No products found." %}</p>
+          </div>
+      {% endif %}
+    {% endblock content %}
+{% endblock body %}
