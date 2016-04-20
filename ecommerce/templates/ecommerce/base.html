@@ -14,13 +14,13 @@
     <title>Shellomi</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'ecommerce/css/bootstrap.min.css' %}" rel="stylesheet">
-
+    <link href="{% static 'ecommerce/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'ecommerce/css/jquery.smartmenus.bootstrap.css' %}" rel="stylesheet" />
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="{% static 'ecommerce/css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'ecommerce/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/styles.css' %}" rel="stylesheet"/>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -62,12 +62,25 @@
               </form>-->
           <ul class="nav navbar-nav">
             {% for root in roots %}
-                <li class="dropdown dropdown-large" id="menuitem{{root.id}}">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{root.name}} <span class="caret"></span></a>
-                  <ul class="dropdown-menu dropdown-menu-large row">
+                <li>
+                  <a href="#">{{root.name}} <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
                     {% for category in root.get_children %}
-                        <li class="col-sm-3 col-md-3">
-                          <ul>
+                        <li>
+                          {% if category.get_children %}
+                              <a href="{{category.get_absolute_url}}">{{category.name}} <span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                {% for subcategory in category.get_children %}
+                                    <li>
+                                      <a href="{{subcategory.get_absolute_url}}">{{subcategory.name}}</a>
+                                    </li>
+                                {% endfor %}
+                              </ul>
+                          {% else %}
+                              <a href="{{category.get_absolute_url}}">{{category.name}}</a>
+                          {% endif %}
+
+                          <!-- <ul class="dropdown-menu">
                             <li class="dropdown-header">{{category.name}}</li>
                             {% for subcategory in category.get_children %}
                                 <li>
@@ -75,10 +88,9 @@
                                 </li>
                             {% endfor %}
                             <li class="divider"/>
-                          </ul>
+                          </ul> -->
                         </li>
                     {% endfor %}
-
                   </ul>
                 </li>
             {% endfor %}
@@ -89,9 +101,17 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-          {% if user.is_authenticated %}
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.company}}</a></li>
-            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span></a></li>
+            {% if user.is_authenticated %}
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Hello {{ user.company }} <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'logout' %}">Sign Out</a></li>
+                  </ul>
+              </li>
+            {% else %}
+              <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+            {% endif %}
             <li>
               <a href="{% url 'basket:summary' %}">
                 <span class="glyphicon glyphicon-shopping-cart"></span> Cart
@@ -100,9 +120,6 @@
                 {% endif %}
               </a>
             </li>
-          {% else %}
-            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          {% endif %}
           </ul>
           <form method="get" action="{% url 'search:search' %}" class="navbar-form" role="search">
             <div class="form-group" style="display:inline;">
@@ -149,6 +166,8 @@
     <script src="{% static 'ecommerce/js/jquery.min.js' %}"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
     <script src="{% static 'ecommerce/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'ecommerce/js/jquery.smartmenus.min.js' %}"></script>
+    <script src="{% static 'ecommerce/js/jquery.smartmenus.bootstrap.min.js' %}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static 'ecommerce/js/ie10-viewport-bug-workaround.js' %}"></script>
     <script src="{% static 'ecommerce/js/main.js' %}"></script>

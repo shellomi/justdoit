@@ -14,7 +14,7 @@
 {% block content %}
   <div class="container">
     <ul class="breadcrumb">
-      <li><a href="{{ homepage_url }}">Home</a></li>
+      <li><a href="{{ homepage_url }}"><span class="glyphicon glyphicon-home"></span></a></li>
       <li class="active">{{ summary }}</li>
     </ul>
   </div>
@@ -50,7 +50,7 @@
   </div> -->
   <div class="container">
     <h2>{{ summary }}</h2>
-    <hr />
+    <hr / />
     <form method="get" class="form-horizontal">
         {# Render other search params in a hidden block #}
         <div style="display:none">

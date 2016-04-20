@@ -48,6 +48,15 @@ body > .main-container {
     background-color: #272424;
 }
 
+/*.navbar-default {
+    background-color: #337ab7;
+    border-color: #1c73a5;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: white;
+}*/
+
 .navbar-brand {
     float: left;
     clear: none;
@@ -110,18 +119,31 @@ body > .main-container {
     color: #fff;
 }*/
 
-/*.navbar-default{
-    background-color: #333;
+.navbar-default{
+    background-color: #337ab7;
+    border-color: transparent;
+}
+.navbar-default .navbar-nav>li>a {
+    color: white;
 }
 .navbar-default .navbar-nav>li>a:link,
 .navbar-default .navbar-nav>li>a:visited {
     color: #fff;
 }
 .navbar-default .navbar-nav>li>a:hover {
-    color: #333;
-    background-color: #fff;
+    color: black;
+    background-color: white;
 }
-.navbar-default .navbar-nav>li>a:active {
+.navbar-default .navbar-nav>li>a:hover .badge {
+    color: white;
+    background-color: black;
+}
+
+.badge {
+    color: #337ab7;
+    background-color: white;
+}
+/*.navbar-default .navbar-nav>li>a:active {
     color: #fff;
 }*/
 
@@ -216,6 +238,7 @@ body > .main-container {
 .breadcrumb {
     margin-bottom: 0;
     margin-top: 70px;
+    /*background-color: #2B3338;*/
 }
 
 /*BEGIN COPIED STYLES*/
