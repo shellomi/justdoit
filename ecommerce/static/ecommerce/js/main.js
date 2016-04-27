@@ -1,4 +1,5 @@
 function main() {
+  $(".primarynav").autoHidingNavbar();
   $(".video-button").click(function(){
     $(".main-container").hide();
     $(".jumbotron").removeClass("my-jumbotron").addClass("jumbotron-video");
