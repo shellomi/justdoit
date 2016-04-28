@@ -49,102 +49,36 @@
           <a class="navbar-brand" href="#">Office Rush!</a>
         </div>
         <div id="headerbar" class="navbar-collapse collapse">
-          <!--<form class="navbar-form navbar-right">
-                <div class="form-group">
-                  <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                  <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-              </form>-->
-              <ul class="nav navbar-nav navbar-right">
-                <li>
-                  <div class="navbar-form">
-                    <a class="btn btn-default" href="{% url 'basket:summary' %}">
-                      <span class="glyphicon glyphicon-shopping-cart"></span> Cart
-                      {% if request.basket.num_lines %}
-                          <span class="badge">{{request.basket.num_lines}}</span>
-                      {% endif %}
-                    </a>
-                  </div>
-                </li>
-              </ul>
-              <form method="get" action="{% url 'search:search' %}" class="navbar-form search-form" role="search">
-                <div class="form-group" style="display:inline;">
-                  <div class="input-group" style="display:table;">
-                    {{ search_form.q }}
-                    <span class="input-group-btn" style="width:1%;">
-                      <button type="submit" class="btn btn-default btn-search">
-                        <span class="glyphicon glyphicon-search"></span>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-              </form>
-
-
-        </div>
-        <!--/.navbar-collapse -->
-      </div>
-    </nav>
-    <!-- <div class="container-fluid headerbar">
-      <div class="container">
-          <div class="col-md-10 col-lg-10">
-            <a class="navbar-brand" href="#">
-              <img src="{% static 'ecommerce/img/apple-touch-icon.png' %}" />
-            </a>
-            <form method="get" action="{% url 'search:search' %}" class="navbar-form" role="search">
-              <div class="form-group">
-                <div class="input-group" style="width:100%">
-                  {{ search_form.q }}
-                  <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default">
-                      <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="col-md-2 col-lg-2">
-            <ul class="nav navbar-nav" style="float:right">
-              <li>
-                <a class="navbar-right" href="{% url 'basket:summary' %}">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <div class="navbar-form">
+                <a class="btn btn-default" href="{% url 'basket:summary' %}">
                   <span class="glyphicon glyphicon-shopping-cart"></span> Cart
                   {% if request.basket.num_lines %}
                       <span class="badge">{{request.basket.num_lines}}</span>
                   {% endif %}
                 </a>
-              </li>
-            </ul>
-          </div>
+              </div>
+            </li>
+          </ul>
+          <form method="get" action="{% url 'search:search' %}" class="navbar-form search-form" role="search">
+            <div class="form-group" style="display:inline;">
+              <div class="input-group" style="display:table;">
+                {{ search_form.q }}
+                <span class="input-group-btn" style="width:1%;">
+                  <button type="submit" class="btn btn-default btn-search">
+                    <span class="glyphicon glyphicon-search"></span>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-    </div> -->
-
+    </nav>
     <nav class="navbar navbar-default navbar-fixed-top primarynav" role="navigation">
       <div class="container">
-        <!-- <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button> -->
-          <!-- <a class="navbar-brand" href="#">
-            <img src="{% static 'ecommerce/img/apple-touch-icon.png' %}" />
-          </a> -->
-        <!-- </div> -->
         <div id="navbar" class="navbar-collapse collapse">
-          <!--<form class="navbar-form navbar-right">
-                <div class="form-group">
-                  <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                  <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-              </form>-->
           <ul class="nav navbar-nav">
             {% for root in roots %}
                 <li>
@@ -164,27 +98,12 @@
                           {% else %}
                               <a href="{{category.get_absolute_url}}">{{category.name}}</a>
                           {% endif %}
-
-                          <!-- <ul class="dropdown-menu">
-                            <li class="dropdown-header">{{category.name}}</li>
-                            {% for subcategory in category.get_children %}
-                                <li>
-                                  <a href="{{subcategory.get_absolute_url}}">{{subcategory.name}}</a>
-                                </li>
-                            {% endfor %}
-                            <li class="divider"/>
-                          </ul> -->
                         </li>
                     {% endfor %}
                   </ul>
                 </li>
             {% endfor %}
-
-            <!--<li class="dropdown"><a href="{% url 'stationery' %}">Stationery<span class="caret"></span></a></li>
-            <li class="dropdown"><a href="#">Housekeeping<span class="caret"></span></a></li>
-            <li class="dropdown"><a href="#">Eatables<span class="caret"></span></a></li>-->
           </ul>
-
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <li class="dropdown">
@@ -198,27 +117,10 @@
               <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
             {% endif %}
           </ul>
-
         </div>
-        <!--/.navbar-collapse -->
       </div>
     </nav>
-    <!-- <div class="main-container container">
-      {% for root in roots %}
-      <div class="row hidden jdi-dropdown-content" id="dropdownmenuitem{{root.id}}">
-        {% for category in root.get_children %}
-        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3" style="border-right:1px;">
-          <h5>{{ category.name }}</h5>
-          {% for subcategory in category.get_children %}
-          <a href={{ subcategory.get_absolute_url }}>{{ subcategory.name }}</a><br>
-          {% endfor %}
-          <br>
-        </div>
-        {% endfor %}
-      </div>
-      {% endfor %}
-    </div> -->
-    <div class="container">
+    <div class="container maincontent">
       {% block body %}
       {% endblock %}
     </div>
