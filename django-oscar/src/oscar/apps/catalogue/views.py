@@ -23,7 +23,8 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
     model = Product
     view_signal = product_viewed
-    template_folder = "catalogue"
+    # template_folder = "catalogue"
+    template_folder = "ecommerce"
 
     # Whether to redirect to the URL with the right path
     enforce_paths = True

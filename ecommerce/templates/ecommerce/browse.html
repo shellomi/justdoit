@@ -18,40 +18,9 @@
         <li class="active">{{ summary }}</li>
       </ul>
     {% endblock breadcrumbs %}
-  <!-- <div class="container">
-      <form method="get" action="{% url 'search:search' %}" class="navbar-form navbar-right">
-          <div class="input-group">
-          {{ search_form.q }}
-          <span class="input-group-btn">
-            <input type="submit" value="{% trans "Go!" %}" class="btn btn-default" />
-          </span>
-          </div>
-      </form>
-  </div> -->
-  <!-- <div class="container">
-    <div class="basket-mini pull-right hidden-xs">
-      <strong>{% trans "Basket total:" %}</strong>
-      {% if request.basket.is_tax_known %}
-          {{ request.basket.total_incl_tax|currency:request.basket.currency }}
-      {% else %}
-          {{ request.basket.total_excl_tax|currency:request.basket.currency }}
-      {% endif %}
-
-      <span class="btn-group">
-          <a class="btn btn-default" href="{% url 'basket:summary' %}">{% trans "View basket" %}</a>
-          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu pull-right">
-              <li>{% include "basket/partials/basket_quick.html" %}</li>
-          </ul>
-      </span>
-    </div>
-  </div> -->
     {% block headertext %}
-      <h2>{{ summary }}</h2>
+      <h2>{{ summary }}</h2><hr />
     {% endblock headertext %}
-    <hr />
     {% block content %}
       <form method="get" class="form-horizontal">
           {# Render other search params in a hidden block #}

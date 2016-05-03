@@ -253,6 +253,7 @@ class LogoutView(generic.RedirectView):
 
 class ProfileView(PageTitleMixin, generic.TemplateView):
     template_name = 'customer/profile/profile.html'
+    # template_name = 'ecommerce/partials/profile.html'
     page_title = _('Profile')
     active_tab = 'profile'
 
@@ -304,6 +305,7 @@ class ProfileView(PageTitleMixin, generic.TemplateView):
 class ProfileUpdateView(PageTitleMixin, generic.FormView):
     form_class = ProfileForm
     template_name = 'customer/profile/profile_form.html'
+    # template_name = 'ecommerce/partials/profile_form.html'
     communication_type_code = 'EMAIL_CHANGED'
     page_title = _('Edit Profile')
     active_tab = 'profile'
@@ -344,7 +346,8 @@ class ProfileUpdateView(PageTitleMixin, generic.FormView):
             Dispatcher().dispatch_user_messages(old_user, msgs)
 
         messages.success(self.request, _("Profile updated"))
-        return redirect(self.get_success_url())
+        # return redirect(self.get_success_url())
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class ProfileDeleteView(PageTitleMixin, generic.FormView):

@@ -21,6 +21,10 @@ body > .main-container {
   padding-top: 50px;
 }
 
+.inline-block {
+    display: inline-block;
+}
+
 .text-muted {
   margin: 15px 0;
 }
@@ -75,6 +79,10 @@ body > .main-container {
     background: none;
     outline: none;
     cursor: pointer;
+}
+.btn-search {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .btn-search,
 .btn-primary {
@@ -215,6 +223,6 @@ body > .main-container {
     box-shadow: 1px 1px 3px 0 #f2f2f2;
     background-image: linear-gradient(to top,#fafafa 0,#fdfdfd 20%,#fff 60%);
 }
-.breadcrumb {
+/*.breadcrumb {
     margin-bottom: 0;
-}
+}*/

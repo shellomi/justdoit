@@ -1,0 +1,6 @@
+{% extends "ecommerce/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+    {% include 'ecommerce/partials/form.html' with form_id="profile_form" action="." %}
+{% endblock tabcontent %}

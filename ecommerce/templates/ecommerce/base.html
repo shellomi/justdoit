@@ -82,7 +82,7 @@
           <ul class="nav navbar-nav">
             {% for root in roots %}
                 <li>
-                  <a href="#">{{root.name}} <span class="caret"></span></a>
+                  <a href="{{root.get_absolute_url}}">{{root.name}} <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     {% for category in root.get_children %}
                         <li>
@@ -107,9 +107,12 @@
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
               <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <a href="{% url 'customer:profile-view' %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Hello {{ user.company }} <span class="caret"></span></a>
                   <ul class="dropdown-menu">
+                    <li><a href="{% url 'customer:profile-view' %}">Profile</a></li>
+                    <li><a href="{% url 'customer:order-list' %}">Orders</a></li>
+                    <li><a href="{% url 'customer:wishlists-list' %}">Wishlist</a></li>
                     <li><a href="{% url 'logout' %}">Sign Out</a></li>
                   </ul>
               </li>

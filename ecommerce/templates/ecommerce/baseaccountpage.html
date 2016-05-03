@@ -1,0 +1,38 @@
+{% extends "ecommerce/browse.html" %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li><a href="{{ homepage_url }}"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li><a href="{% url 'customer:summary' %}">{% trans 'Account' %}</a></li>
+        <li class="active">{{ page_title }}</li>
+    </ul>
+{% endblock %}
+
+{% block headertext %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+      <div class="col-sm-4 col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Account settings" %}</h3>
+          </div>
+          <div class="list-group">
+            <a href="{% url 'customer:profile-view' %}" class="list-group-item {% if active_tab == 'profile' %} active {%endif%}">
+              {% trans "Profile" %}</a>
+            <a href="{% url 'customer:order-list' %}" class="list-group-item {% if active_tab == 'orders' %} active {%endif%}">
+              {% trans "Order History" %}</a>
+            <a href="{% url 'customer:address-list' %}" class="list-group-item {% if active_tab == 'addresses' %} active {%endif%}">
+              {% trans "Address Book" %}</a>
+            <a href="{% url 'customer:wishlists-list' %}" class="list-group-item {% if active_tab == 'wishlists' %} active {%endif%}">
+              {% trans "Wishlist" %}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8 col-md-9">
+        {% block tabcontent %}{% endblock tabcontent %}
+      </div>
+  </div>
+{% endblock content %}

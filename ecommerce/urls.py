@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 from . import views, forms
 
@@ -28,4 +29,7 @@ urlpatterns = [
             template_name='ecommerce/registration/registration_closed.html'
         ),
         name='registration_disallowed'),
+    # url(r'^profile/$',
+    #     login_required(views.ProfileView.as_view()),
+    #     name='profile-view'),
 ]
