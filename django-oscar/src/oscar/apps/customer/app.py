@@ -27,6 +27,7 @@ class CustomerApplication(Application):
     login_view = get_class('customer.views', 'AccountAuthView')
     logout_view = get_class('customer.views', 'LogoutView')
     register_view = get_class('customer.views', 'AccountRegistrationView')
+    myprofile_view = get_class("customer.views", "MyProfileView")
     profile_view = get_class('customer.views', 'ProfileView')
     profile_update_view = get_class('customer.views', 'ProfileUpdateView')
     profile_delete_view = get_class('customer.views', 'ProfileDeleteView')
@@ -77,20 +78,20 @@ class CustomerApplication(Application):
             url(r'^register/$', self.register_view.as_view(), name='register'),
             url(r'^$', login_required(self.summary_view.as_view()),
                 name='summary'),
-            url(r'^change-password/$',
-                login_required(self.change_password_view.as_view()),
-                name='change-password'),
+            # url(r'^change-password/$',
+            #     login_required(self.change_password_view.as_view()),
+            #     name='change-password'),
 
             # Profile
             url(r'^profile/$',
-                login_required(self.profile_view.as_view()),
+                login_required(self.myprofile_view.as_view()),
                 name='profile-view'),
-            url(r'^profile/edit/$',
-                login_required(self.profile_update_view.as_view()),
-                name='profile-update'),
-            url(r'^profile/delete/$',
-                login_required(self.profile_delete_view.as_view()),
-                name='profile-delete'),
+            # url(r'^profile/edit/$',
+            #     login_required(self.profile_update_view.as_view()),
+            #     name='profile-update'),
+            # url(r'^profile/delete/$',
+            #     login_required(self.profile_delete_view.as_view()),
+            #     name='profile-delete'),
 
             # Order history
             url(r'^orders/$',

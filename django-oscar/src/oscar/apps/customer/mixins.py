@@ -31,10 +31,10 @@ class PageTitleMixin(object):
         return self.page_title
 
     def get_context_data(self, **kwargs):
-        ctx = super(PageTitleMixin, self).get_context_data(**kwargs)
-        ctx.setdefault('page_title', self.get_page_title())
-        ctx.setdefault('active_tab', self.active_tab)
-        return ctx
+        # ctx = super(PageTitleMixin, self).get_context_data(**kwargs)
+        kwargs.setdefault('page_title', self.get_page_title())
+        kwargs.setdefault('active_tab', self.active_tab)
+        return kwargs
 
 
 class RegisterUserMixin(object):

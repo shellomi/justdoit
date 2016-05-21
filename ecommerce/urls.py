@@ -29,7 +29,4 @@ urlpatterns = [
             template_name='ecommerce/registration/registration_closed.html'
         ),
         name='registration_disallowed'),
-    # url(r'^profile/$',
-    #     login_required(views.ProfileView.as_view()),
-    #     name='profile-view'),
 ]

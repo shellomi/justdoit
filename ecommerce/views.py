@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.views.generic import UpdateView
-from oscar.apps.customer.forms import ProfileForm, PasswordChangeForm, ConfirmPasswordForm
 from registration.backends.hmac.views import RegistrationView as BaseRegistrationView, ActivationView as BaseActivationView
 from . import models, forms
 
@@ -78,8 +76,3 @@ class RegistrationView(BaseRegistrationView):
 class ActivationView(BaseActivationView):
     """docstring for ActivationView"""
     template_name = 'ecommerce/registration/activate.html'
-
-class ProfileView(UpdateView):
-    template_name = 'ecommerce/partials/profile.html'
-    profile_form_class = ProfileForm
-    passwordchange_form_class = PasswordChangeForm

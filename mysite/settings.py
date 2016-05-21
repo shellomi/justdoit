@@ -60,6 +60,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'oscar.apps.basket.middleware.BasketMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'chromelogger.DjangoMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'

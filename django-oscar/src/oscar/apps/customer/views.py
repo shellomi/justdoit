@@ -19,6 +19,7 @@ from oscar.core.utils import safe_referrer
 from oscar.views.generic import PostActionMixin
 
 from . import signals
+import chromelogger as console
 
 PageTitleMixin, RegisterUserMixin = get_classes(
     'customer.mixins', ['PageTitleMixin', 'RegisterUserMixin'])
@@ -300,6 +301,122 @@ class ProfileView(PageTitleMixin, generic.TemplateView):
             'name': getattr(field, 'verbose_name'),
             'value': value,
         }
+
+
+class MyProfileView(PageTitleMixin, generic.TemplateView):
+    template_name = 'ecommerce/partials/profile.html'
+    communication_type_code = 'EMAIL_CHANGED'
+    page_title = _('Edit Profile')
+    active_tab = 'profile'
+
+    profile_form_class = ProfileForm
+    pwd_change_form_class = PasswordChangeForm
+    delete_profile_form_class = ConfirmPasswordForm
+    profile_prefix, pwd_change_prefix, delete_profile_prefix = "profile", "pwd_change", "delete_profile"
+
+    def get(self, request, *args, **kwargs):
+        return super(MyProfileView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if u'profile_form_submit' in request.POST:
+            return self.validate_profile_form()
+        if u'pwd_change_form_submit' in request.POST:
+            return self.validate_pwd_change_form()
+        if u'delete_profile_form_submit' in request.POST:
+            return self.validate_delete_profile_form()
+        return http.HttpResponseBadRequest()
+
+    def validate_profile_form(self):
+        form = self.get_profile_form(bind_data=True)
+        if form.is_valid():
+            # Grab current user instance before we save form.  We may need this to
+            # send a warning email if the email address is changed.
+            try:
+                old_user = User.objects.get(id=self.request.user.id)
+            except User.DoesNotExist:
+                old_user = None
+
+            form.save()
+
+            # We have to look up the email address from the form's
+            # cleaned data because the object created by form.save() can
+            # either be a user or profile instance depending whether a profile
+            # class has been specified by the AUTH_PROFILE_MODULE setting.
+            new_email = form.cleaned_data.get('email')
+            if new_email and old_user and new_email != old_user.email:
+                # Email address has changed - send a confirmation email to the old
+                # address including a password reset link in case this is a
+                # suspicious change.
+                ctx = {
+                    'user': self.request.user,
+                    'site': get_current_site(self.request),
+                    'reset_url': get_password_reset_url(old_user),
+                    'new_email': new_email,
+                }
+                msgs = CommunicationEventType.objects.get_and_render(
+                    code='EMAIL_CHANGED', context=ctx)
+                Dispatcher().dispatch_user_messages(old_user, msgs)
+
+            messages.success(self.request, _("Profile updated"))
+        return self.render_to_response(self.get_context_data(profile_form=form))
+
+    def validate_pwd_change_form(self):
+        form = self.get_pwd_change_form(bind_data=True)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(self.request, self.request.user)
+            messages.success(self.request, _("Password updated"))
+
+            ctx = {
+                'user': self.request.user,
+                'site': get_current_site(self.request),
+                'reset_url': get_password_reset_url(self.request.user),
+            }
+            msgs = CommunicationEventType.objects.get_and_render(
+                code='PASSWORD_CHANGED', context=ctx)
+            Dispatcher().dispatch_user_messages(self.request.user, msgs)
+
+        return self.render_to_response(self.get_context_data(pwd_change_form=form))
+
+    def validate_delete_profile_form(self):
+        form = self.get_delete_profile_form(bind_data=True)
+        if form.is_valid():
+            self.request.user.delete()
+            messages.success(self.request, _("Your profile has now been deleted. Thanks for using the site."))
+            return redirect(self.get_success_url())
+        return self.render_to_response(self.get_context_data(delete_profile_form=form))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(MyProfileView, self).get_context_data(*args, **kwargs)
+        if "profile_form" not in context:
+            context["profile_form"] = self.get_profile_form()
+        if "pwd_change_form" not in context:
+            context["pwd_change_form"] = self.get_pwd_change_form()
+        if "delete_profile_form" not in context:
+            context["delete_profile_form"] = self.get_delete_profile_form()
+        return context
+
+    def get_profile_form(self, bind_data=False):
+        return self.profile_form_class(**self.get_form_kwargs(self.profile_prefix, bind_data))
+
+    def get_pwd_change_form(self, bind_data=False):
+        return self.pwd_change_form_class(**self.get_form_kwargs(self.pwd_change_prefix, bind_data))
+
+    def get_delete_profile_form(self, bind_data=False):
+        return self.delete_profile_form_class(**self.get_form_kwargs(self.delete_profile_prefix, bind_data))
+
+    def get_form_kwargs(self, prefix, bind_data=False):
+        kwargs = {
+            'prefix': prefix,
+            'user': self.request.user,
+        }
+
+        if bind_data and self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
 
 
 class ProfileUpdateView(PageTitleMixin, generic.FormView):
