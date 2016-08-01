@@ -19,7 +19,7 @@
       </ul>
     {% endblock breadcrumbs %}
     {% block headertext %}
-      <h2>{{ summary }}</h2><hr />
+      <h3>{{ summary }}</h3><hr />
     {% endblock headertext %}
     {% block content %}
       <form method="get" class="form-horizontal">
@@ -73,7 +73,7 @@
 
                             <!-- <img src="{% static 'ecommerce/img/Thumbnail_Placeholder.png' %}" alt="{{ product.get_title }}"/> -->
                           </p>
-                      <h3>{{ product.get_title|truncatewords:4 }}</h3>
+                      <h4 class="product-title">{{ product.get_title|truncatewords:4 }}</h4>
                       {% purchase_info_for_product request product as session %}
                       {% if session.price.exists %}
                           {% if session.price.excl_tax == 0 %}
